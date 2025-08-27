@@ -4,44 +4,41 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>The Bad Idea Generator — Get-Rich-Quick (Satire)</title>
-  <meta name="description" content="Press a button to generate cursed startup pitches, get-rich-quick schemes, and MLM-ish nonsense. 100% satire, for laughs only." />
+  <meta name="description" content="Cursed startup pitches, plausible scammy schemes, and MLM-ish nonsense. 100% satire." />
   <style>
     :root{--bg:#0b1220;--card:#0f172a;--ink:#e6eef6;--muted:#9aa4b2;--accent:#fbbf24;--accent2:#22d3ee;--glass:rgba(255,255,255,.05)}
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;background:radial-gradient(1200px 600px at 70% -10%, #12213e 0, #0b1220 50%, #0a0f1e 100%);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;display:flex;align-items:center;justify-content:center;padding:18px}
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;background:radial-gradient(1200px 600px at 70% -10%, #12213e 0, #0b1220 50%, #0a0f1e 100%);
+         color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+         display:flex;align-items:center;justify-content:center;padding:18px}
     .app{width:100%;max-width:860px}
     header{display:flex;gap:12px;align-items:center;margin-bottom:14px}
-    .logo{width:56px;height:56px;border-radius:14px;background:conic-gradient(from 230deg, var(--accent), #ef4444, var(--accent2), var(--accent));display:grid;place-items:center;color:#0b1220;font-weight:900}
-    h1{font-size:20px;margin:0}
-    .lead{margin:0;color:var(--muted);font-size:13px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));border:1px solid rgba(255,255,255,.04);border-radius:16px;box-shadow:0 10px 24px rgba(2,6,23,.6);padding:16px}
-
+    .logo{width:56px;height:56px;border-radius:14px;background:conic-gradient(from 230deg, var(--accent), #ef4444, var(--accent2), var(--accent));
+          display:grid;place-items:center;color:#0b1220;font-weight:900}
+    h1{font-size:20px;margin:0} .lead{margin:0;color:var(--muted);font-size:13px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+          border:1px solid rgba(255,255,255,.04);border-radius:16px;box-shadow:0 10px 24px rgba(2,6,23,.6);padding:16px}
     .controls{display:flex;gap:8px;flex-wrap:wrap}
-    select,input,button{appearance:none;border:1px solid rgba(255,255,255,.06);background:var(--glass);color:var(--ink);border-radius:10px;padding:10px 12px;font-size:14px}
+    select,input,button{appearance:none;border:1px solid rgba(255,255,255,.06);background:var(--glass);color:var(--ink);
+                        border-radius:10px;padding:10px 12px;font-size:14px}
     button.primary{background:linear-gradient(90deg,var(--accent),#f59e0b);color:#0b1220;font-weight:800;border:0}
     button.ghost{background:transparent}
-
     .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
     .chip{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);cursor:pointer}
     .chip.active{outline:2px solid var(--accent)}
-
     .output{margin-top:12px;display:flex;flex-direction:column;gap:8px}
-    .idea{font-size:20px;line-height:1.35;background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));border:1px solid rgba(255,255,255,.06);padding:16px;border-radius:14px}
+    .idea{font-size:20px;line-height:1.35;background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+          border:1px solid rgba(255,255,255,.06);padding:16px;border-radius:14px}
     .meta{display:flex;gap:8px;align-items:center}
     .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--muted);border:1px solid rgba(255,255,255,.08)}
-
-    .actions{display:flex;gap:8px;flex-wrap:wrap}
     .small{font-size:12px;color:var(--muted)}
-    footer{margin-top:10px;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px}
-
     .batch{display:grid;grid-template-columns:repeat(1, minmax(0,1fr));gap:8px;margin-top:10px}
     @media(min-width:540px){.batch{grid-template-columns:repeat(2, minmax(0,1fr));}}
     @media(min-width:900px){.batch{grid-template-columns:repeat(3, minmax(0,1fr));}}
-
     .favbar{margin-top:10px}
-    .fav{display:inline-flex;align-items:center;gap:6px;margin:4px;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);font-size:12px}
-
+    .fav{display:inline-flex;align-items:center;gap:6px;margin:4px;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,.05);
+         border:1px solid rgba(255,255,255,.08);font-size:12px}
+    footer{margin-top:10px;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px}
     .notice{margin-top:8px;font-size:12px;color:#a3a3a3}
   </style>
 </head>
@@ -51,7 +48,7 @@
       <div class="logo">BIG</div>
       <div>
         <h1>The Bad Idea Generator</h1>
-        <p class="lead">Cursed startup pitches & get-rich-quick “schemes.” 100% satire. Please don’t actually do these.</p>
+        <p class="lead">Cursed startup pitches, near-plausible schemes, and hustle nonsense. 100% satire. Don’t actually do these.</p>
       </div>
     </header>
 
@@ -59,13 +56,14 @@
       <div class="controls">
         <select id="mode">
           <option value="surprise">Surprise me</option>
+          <option value="realish">Too-Real (satire)</option>
           <option value="getrich">Get-Rich-Quick</option>
           <option value="mlm">MLM-ish</option>
           <option value="crypto">Crypto/Token</option>
           <option value="ai">AI Buzzword Soup</option>
           <option value="hustle">Hustle Culture</option>
         </select>
-        <input id="seed" placeholder="Optional seed (e.g. 'ferrets')" />
+        <input id="seed" placeholder="Optional seed (e.g. 'domains', 'neighbors')" />
         <button id="gen" class="primary">Generate</button>
         <button id="batch9" title="Generate 9">Batch×9</button>
         <button id="save" class="ghost">Save</button>
@@ -77,59 +75,112 @@
       <div class="chips" id="chips"></div>
 
       <div class="output">
-        <div class="idea" id="idea">Tap Generate to summon a truly terrible business concept.</div>
+        <div class="idea" id="idea">Tap Generate to summon a disturbingly plausible bad idea.</div>
         <div class="meta"><span class="tag" id="tag">—</span><span class="small" id="seedtag"></span></div>
         <div id="batch" class="batch"></div>
         <div class="favbar small">Saved (<span id="favcount">0</span>): <span id="favs"></span></div>
-        <div class="notice">Satire only. Don’t scam people. Don’t break the law. Touch grass.</div>
+        <div class="notice">Satire only. Don’t scam people. Don’t break the law.</div>
       </div>
 
       <footer>
-        <span>Made to host on GitHub Pages / Glitch / Replit</span>
-        <span class="small">v1.2</span>
+        <span>GitHub Pages / Glitch / Replit</span>
+        <span class="small">v1.3</span>
       </footer>
     </div>
   </div>
 
 <script>
-// ===== utils (defensive) =====
+// ========= utils (defensive) =========
 const $ = (id)=>document.getElementById(id);
 function hashStr(s){ s = String(s ?? ''); let h=2166136261>>>0; for(let i=0;i<s.length;i++){h=((h^s.charCodeAt(i))*16777619)>>>0;} return h>>>0; }
-function rng(seed){
-  let x = hashStr(seed.toLowerCase());
-  return ()=>{ x ^= x<<13; x ^= x>>>17; x ^= x<<5; return (x>>>0)/4294967296; };
-}
-function safePick(arr, r){ // never returns undefined
-  if (!Array.isArray(arr) || arr.length === 0) return '';
-  const fn = (typeof r === 'function') ? r : ()=>Math.random();
-  const idx = Math.floor(fn()*arr.length);
-  return arr[Math.max(0, Math.min(arr.length-1, idx))] ?? '';
-}
+function rng(seed){ let x = hashStr(seed.toLowerCase()); return ()=>{ x ^= x<<13; x ^= x>>>17; x ^= x<<5; return (x>>>0)/4294967296; }; }
+function safePick(arr, r){ if (!Array.isArray(arr) || arr.length===0) return ''; const fn = (typeof r==='function')? r : ()=>Math.random(); return arr[Math.floor(fn()*arr.length)] ?? ''; }
 function sentence(parts){ return parts.filter(Boolean).join(' ').replace(/\s+/g,' ').trim(); }
 
-// ===== word banks (satire-only) =====
-const ADJ = ["passive","frictionless","unhinged","AI-powered","blockchain-adjacent","disruptive","non-fungible","tooth-whitening","ergonomic","marine-grade","influencer-proof","unscammable","gluten-aware","hustle-centric","crypto-curious","ferret-friendly","gamma-optimized","Sigma-grindset","garage-ready","side-quest"];
-const NOUN = ["newsletter","course","webinar","eBook","Discord","app","coin","token","PDF bundle","coaching circle","dropship empire","loyalty program","vending machine","scented candle","planner","subscription box","spreadsheet temple","chrome extension","loot box","sticker pack"];
-const AUDIENCE = ["cat owners","new dads","crypto widows","CrossFit accountants","left-handed baristas","people who say 'literally'","van-lifers","pickleball champs","moms named Ashley","PC builders","Fridays-only gym bros","retired magicians","sous-vide enthusiasts","people with 7 tabs open","car guys who bake","introverted extroverts"];
-const MECH = ["pay a tiny monthly fee","stake vibes for yield","refer 3 friends who refer 3 friends","mint loyalty points on a spreadsheet","watch ads while you sleep","convert exposure into rent","sell the method for selling the method","charge a convenience fee on free items","pre-sell the sequel first","bundle 7 free things and charge $19","rent your personality by the hour","turn chores into micro-tasks","repackage Wikipedia with emojis"];
-const PROMISE = ["six figures by Friday","passive income while you blink","cashflow before learning anything","ROI so high calculators cry","lifestyle so passive it naps","freedom from clocks and socks","profits in dog years","money printer that says 'pls'","overnight success, allow 2-3 years"];
-const CRYPTO = ["airdrop seasonality","layer-2 vibes","deflationary dust","yield-bearing memes","token-gated coupons","gasless IOUs","proof-of-vibes consensus","staking for clout","airdropped apologies"];
-const AI = ["fine-tuned vibes","auto-prompted funnels","agentic hustle swarms","synthetic interns","generative door-to-door","AI that hires other AI","LLM that only says 'bro'","sentiment-driven cold DMs","prompt-engineered charisma"];
-const MLM = ["infinite depth but tastefully","circle that is legally a polygon","upline brunch culture","rank names like 'Obsidian Wolf'","monthly box of vibes","car bonus that's a bus pass","webinars about webinars","team chants in Slack","leadership crystals included"];
+// ========= “too-real” wordbanks (human hooks) =========
+const REL_TARGET = [
+  "your cousin who sells knives on Facebook",
+  "the HOA president who hates lawn gnomes",
+  "your old boss who starts every email with 'quick question'",
+  "parents at the Saturday soccer game",
+  "that one neighbor with the power washer",
+  "the guy at work who vapes indoors",
+  "people in your group chat who say 'thoughts?'",
+  "alumni from your high school who peaked junior year",
+  "the micro-influencer at the gym",
+  "new homeowners who just discovered grass"
+];
 
-// ===== idea factories (use safePick everywhere) =====
+const REAL_PROP = [
+  "Use AI to bulk-watch expiring domains and ‘pre-value’ anything remotely brandable, then list them for rent like vanity plates.",
+  "Start a ‘community investment club’ that only invests in your merchandise.",
+  "Sell a course on how to sell courses, but your course is just a calendar invite.",
+  "Offer ‘done-for-you’ LinkedIn endorsements written by a robot with charisma issues.",
+  "Run a newsletter that reviews side hustles you also secretly run.",
+  "Flip liquidation pallets of mystery returns and call it ‘surprise retail’.",
+  "Host a Zoom ‘networking brunch’ where people pay to bring their own coffee.",
+  "Start a subscription for motivational alarms that just shout ‘rise and grind’.",
+  "Bundle seven free PDFs from the internet, add emojis, charge $19.",
+  "Create a referral program that rewards people for explaining the referral program."
+];
+
+const REAL_TWIST = [
+  "Add a waitlist so it seems exclusive, but the waitlist is a Google Sheet.",
+  "Pay ‘brand reps’ in store credit to buy more store credit.",
+  "Describe everything as ‘beta’ for 18 months.",
+  "Call refunds ‘reverse investments’.",
+  "Make tiers named Bronze, Gold, and ‘Diamond Wolf’.",
+  "Make the logo a triangle but insist it’s not a pyramid.",
+  "Offer a lifetime plan that expires in two summers.",
+  "Promise a roadmap; publish a treasure map.",
+  "Ship a ‘pro’ version that’s just dark mode.",
+  "Hold ‘office hours’ at the gym sauna."
+];
+
+// Your examples baked in:
+const REAL_EXAMPLES = [
+  "Use AI to buy every domain possible and sell for a profit.",
+  "Create a survivor gameshow for children called ‘Lord of the Flies’ (pilot filmed at recess; no thanks)."
+];
+
+// ========= other banks (lightly tweaked) =========
+const ADJ = ["passive","frictionless","unhinged","AI-powered","blockchain-adjacent","disruptive","non-fungible","ergonomic",
+             "influencer-proof","unscammable","gluten-aware","hustle-centric","crypto-curious","ferret-friendly","garage-ready"];
+const NOUN = ["newsletter","course","webinar","eBook","Discord","app","coin","token","PDF bundle","coaching circle","loyalty program",
+              "subscription box","chrome extension","sticker pack"];
+const AUDIENCE = ["cat owners","new dads","CrossFit accountants","left-handed baristas","van-lifers","pickleball champs",
+                  "moms named Ashley","PC builders","people with 7 tabs open","introverted extroverts"];
+const MECH = ["pay a tiny monthly fee","refer 3 friends who refer 3 friends","mint loyalty points on a spreadsheet",
+              "watch ads while you sleep","sell the method for selling the method","charge a convenience fee on free items",
+              "bundle 7 free things and charge $19","turn chores into micro-tasks"];
+const PROMISE = ["six figures by Friday","passive income while you blink","ROI so high calculators cry","freedom from clocks and socks"];
+const CRYPTO = ["layer-2 vibes","deflationary dust","token-gated coupons","gasless IOUs","proof-of-vibes consensus","staking for clout"];
+const AI = ["agentic hustle swarms","synthetic interns","generative door-to-door","AI that hires other AI","sentiment-driven cold DMs"];
+const MLM = ["infinite depth but tastefully","circle that is legally a polygon","upline brunch culture","rank names like ‘Obsidian Wolf’",
+             "monthly box of vibes","team chants in Slack"];
+
+// ========= factories =========
+function ideaTooReal(r){
+  // 1-in-4 chance to output one of the explicit examples
+  if ((r() < 0.25)) return safePick(REAL_EXAMPLES, r);
+
+  const target = safePick(REL_TARGET, r);
+  const prop   = safePick(REAL_PROP, r);
+  const twist  = safePick(REAL_TWIST, r);
+
+  return sentence([
+    "Pitch this to", target + ":", prop + ".", twist
+  ]);
+}
 function ideaGetRich(r){
   return sentence([
-    "Launch a",
-    safePick(ADJ,r), safePick(NOUN,r), "for", safePick(AUDIENCE,r) + ";",
-    "users", safePick(MECH,r) + ".",
-    "Promise", safePick(PROMISE,r) + "."
+    "Launch a", safePick(ADJ,r), safePick(NOUN,r), "for", safePick(AUDIENCE,r) + ";",
+    "users", safePick(MECH,r) + ".", "Promise", safePick(PROMISE,r) + "."
   ]);
 }
 function ideaMLM(r){
   return sentence([
-    "Tasteful not-a-pyramid where members sell a",
-    safePick(ADJ,r), safePick(NOUN,r), "to", safePick(AUDIENCE,r) + ";",
+    "Not-a-pyramid where members sell a", safePick(ADJ,r), safePick(NOUN,r), "to", safePick(AUDIENCE,r) + ";",
     safePick(MLM,r) + "."
   ]);
 }
@@ -155,29 +206,23 @@ function ideaHustle(r){
 function makeIdea(modeKey, seedStr){
   const r = rng(seedStr || (Math.random()+""));
   switch(modeKey){
+    case 'realish': return ideaTooReal(r);
     case 'getrich': return ideaGetRich(r);
     case 'mlm':     return ideaMLM(r);
     case 'crypto':  return ideaCrypto(r);
     case 'ai':      return ideaAI(r);
     case 'hustle':  return ideaHustle(r);
     default: {
-      const fns = [ideaGetRich, ideaMLM, ideaCrypto, ideaAI, ideaHustle];
+      const fns = [ideaTooReal, ideaGetRich, ideaMLM, ideaCrypto, ideaAI, ideaHustle];
       return safePick(fns, r)(r);
     }
   }
 }
 
-// ===== wire-up =====
-const mode = $('mode');
-const seed = $('seed');
-const idea = $('idea');
-const tag = $('tag');
-const seedtag = $('seedtag');
-const favcount = $('favcount');
-const favs = $('favs');
-const batch = $('batch');
-
-const chipCats = ['surprise','getrich','mlm','crypto','ai','hustle'];
+// ========= wire-up =========
+const mode = $('mode'), seed = $('seed'), idea = $('idea'), tag = $('tag'), seedtag = $('seedtag');
+const favcount = $('favcount'), favs = $('favs'), batch = $('batch');
+const chipCats = ['surprise','realish','getrich','mlm','crypto','ai','hustle'];
 const chips = $('chips');
 chipCats.forEach(c=>{
   const el=document.createElement('div'); el.className='chip'; el.dataset.c=c; el.textContent=c;
@@ -193,9 +238,9 @@ function generate(){
   const text = makeIdea(m, s || new Date().toISOString());
   idea.textContent = text; tag.textContent = m; seedtag.textContent = s? `seed: ${s}` : '';
 }
-document.getElementById('gen').onclick = generate;
+$('gen').onclick = generate;
 
-document.getElementById('batch9').onclick = ()=>{
+$('batch9').onclick = ()=>{
   batch.innerHTML='';
   const m = mode.value; const base = seed.value.trim() || (Date.now()+'');
   for(let i=0;i<9;i++){
@@ -207,31 +252,21 @@ document.getElementById('batch9').onclick = ()=>{
   tag.textContent = m+" ×9"; seedtag.textContent = base? `seed: ${base}` : '';
 };
 
-document.getElementById('copy').onclick = async ()=>{
-  try{ await navigator.clipboard.writeText(idea.textContent); alert('Copied!'); }
-  catch(e){ alert('Copy failed — long-press to copy on mobile.'); }
-};
-document.getElementById('tweet').onclick = ()=>{
-  const text = encodeURIComponent(idea.textContent+" #BadIdeaGenerator");
-  const url = encodeURIComponent(location.href);
-  window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`,'_blank');
-};
-document.getElementById('share').onclick = async ()=>{
-  if(navigator.share){ try{ await navigator.share({title:'Bad Idea Generator', text: idea.textContent}); }catch(e){} }
-  else { alert('Sharing works on most mobile browsers.'); }
-};
+$('copy').onclick = async ()=>{ try{ await navigator.clipboard.writeText(idea.textContent); alert('Copied!'); } catch(e){ alert('Copy failed — long-press to copy on mobile.'); } };
+$('tweet').onclick = ()=>{ const text = encodeURIComponent(idea.textContent+" #BadIdeaGenerator"); const url = encodeURIComponent(location.href);
+  window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`,'_blank'); };
+$('share').onclick = async ()=>{ if(navigator.share){ try{ await navigator.share({title:'Bad Idea Generator', text: idea.textContent}); }catch(e){} }
+  else { alert('Sharing works on most mobile browsers.'); } };
 
 function loadFavs(){ try{return JSON.parse(localStorage.getItem('big_favs')||'[]');}catch(e){return [];} }
 function saveFavs(a){ try{localStorage.setItem('big_favs', JSON.stringify(a));}catch(e){} }
-function renderFavs(){
-  const a=loadFavs(); favcount.textContent = a.length; favs.innerHTML='';
-  a.slice(-12).forEach(t=>{ const b=document.createElement('span'); b.className='fav'; b.textContent=t; favs.appendChild(b); });
-}
-document.getElementById('save').onclick = ()=>{ const a=loadFavs(); a.push(idea.textContent); saveFavs(a); renderFavs(); alert('Saved locally!'); };
+function renderFavs(){ const a=loadFavs(); favcount.textContent = a.length; favs.innerHTML='';
+  a.slice(-12).forEach(t=>{ const b=document.createElement('span'); b.className='fav'; b.textContent=t; favs.appendChild(b); }); }
+$('save').onclick = ()=>{ const a=loadFavs(); a.push(idea.textContent); saveFavs(a); renderFavs(); alert('Saved locally!'); };
 renderFavs();
 
-// initial idea
-idea.textContent = makeIdea('surprise', new Date().toISOString()); tag.textContent='surprise';
+// initial
+idea.textContent = makeIdea('realish', new Date().toISOString()); tag.textContent='realish';
 </script>
 </body>
 </html>
