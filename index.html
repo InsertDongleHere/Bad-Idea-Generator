@@ -86,26 +86,26 @@
 
       <footer>
         <span>Made to host on GitHub Pages / Glitch / Replit</span>
-        <span class="small">v1.1</span>
+        <span class="small">v1.2</span>
       </footer>
     </div>
   </div>
 
 <script>
-// ===== utils (fixed pick to avoid 'undefined') =====
+// ===== utils (defensive) =====
 const $ = (id)=>document.getElementById(id);
-function hash(s){ s = String(s); let h=2166136261>>>0; for(let i=0;i<s.length;i++){h=((h^s.charCodeAt(i))*16777619)>>>0;} return h>>>0; }
-function seeded(seed){
-  let x = hash(seed.toLowerCase());
+function hashStr(s){ s = String(s ?? ''); let h=2166136261>>>0; for(let i=0;i<s.length;i++){h=((h^s.charCodeAt(i))*16777619)>>>0;} return h>>>0; }
+function rng(seed){
+  let x = hashStr(seed.toLowerCase());
   return ()=>{ x ^= x<<13; x ^= x>>>17; x ^= x<<5; return (x>>>0)/4294967296; };
 }
-// ✅ If r is a function (RNG), sample properly; if r is a number, coerce to a valid index
-function pick(arr, r){
-  if (!arr || !arr.length) return '';
-  if (typeof r === 'function') return arr[Math.floor(r()*arr.length)];
-  const idx = Math.abs((Number(r)|0)) % arr.length;
-  return arr[idx];
+function safePick(arr, r){ // never returns undefined
+  if (!Array.isArray(arr) || arr.length === 0) return '';
+  const fn = (typeof r === 'function') ? r : ()=>Math.random();
+  const idx = Math.floor(fn()*arr.length);
+  return arr[Math.max(0, Math.min(arr.length-1, idx))] ?? '';
 }
+function sentence(parts){ return parts.filter(Boolean).join(' ').replace(/\s+/g,' ').trim(); }
 
 // ===== word banks (satire-only) =====
 const ADJ = ["passive","frictionless","unhinged","AI-powered","blockchain-adjacent","disruptive","non-fungible","tooth-whitening","ergonomic","marine-grade","influencer-proof","unscammable","gluten-aware","hustle-centric","crypto-curious","ferret-friendly","gamma-optimized","Sigma-grindset","garage-ready","side-quest"];
@@ -117,15 +117,121 @@ const CRYPTO = ["airdrop seasonality","layer-2 vibes","deflationary dust","yield
 const AI = ["fine-tuned vibes","auto-prompted funnels","agentic hustle swarms","synthetic interns","generative door-to-door","AI that hires other AI","LLM that only says 'bro'","sentiment-driven cold DMs","prompt-engineered charisma"];
 const MLM = ["infinite depth but tastefully","circle that is legally a polygon","upline brunch culture","rank names like 'Obsidian Wolf'","monthly box of vibes","car bonus that's a bus pass","webinars about webinars","team chants in Slack","leadership crystals included"];
 
-// ===== idea factories =====
+// ===== idea factories (use safePick everywhere) =====
 function ideaGetRich(r){
-  return `Launch a ${pick(ADJ,r)} ${pick(NOUN,r)} for ${pick(AUDIENCE,r)}; users ${pick(MECH,r)}. Promise ${pick(PROMISE,r)}.`;
+  return sentence([
+    "Launch a",
+    safePick(ADJ,r), safePick(NOUN,r), "for", safePick(AUDIENCE,r) + ";",
+    "users", safePick(MECH,r) + ".",
+    "Promise", safePick(PROMISE,r) + "."
+  ]);
 }
 function ideaMLM(r){
-  return `Tasteful not-a-pyramid where members sell a ${pick(ADJ,r)} ${pick(NOUN,r)} to ${pick(AUDIENCE,r)}; ${pick(MLM,r)}.`;
+  return sentence([
+    "Tasteful not-a-pyramid where members sell a",
+    safePick(ADJ,r), safePick(NOUN,r), "to", safePick(AUDIENCE,r) + ";",
+    safePick(MLM,r) + "."
+  ]);
 }
 function ideaCrypto(r){
-  return `Tokenize ${pick(AUDIENCE,r)} with ${pick(ADJ,r)} ${pick(NOUN,r)}; ${pick(CRYPTO,r)}; chart only goes up (artist's impression).`;
+  return sentence([
+    "Tokenize", safePick(AUDIENCE,r), "with", safePick(ADJ,r), safePick(NOUN,r) + ";",
+    safePick(CRYPTO,r) + ";", "chart only goes up (artist's impression)."
+  ]);
 }
 function ideaAI(r){
-  return `Ship an ${pick(ADJ,r)} AI that does $
+  return sentence([
+    "Ship an", safePick(ADJ,r), "AI that does", safePick(AI,r), "for", safePick(AUDIENCE,r) + ".",
+    "Monetize when it invoices itself."
+  ]);
+}
+function ideaHustle(r){
+  return sentence([
+    "Wake at 4:04am to resell", safePick(NOUN,r), "to", safePick(AUDIENCE,r) + ";",
+    safePick(MECH,r) + ".", "Read a thread about it and become a mentor."
+  ]);
+}
+
+function makeIdea(modeKey, seedStr){
+  const r = rng(seedStr || (Math.random()+""));
+  switch(modeKey){
+    case 'getrich': return ideaGetRich(r);
+    case 'mlm':     return ideaMLM(r);
+    case 'crypto':  return ideaCrypto(r);
+    case 'ai':      return ideaAI(r);
+    case 'hustle':  return ideaHustle(r);
+    default: {
+      const fns = [ideaGetRich, ideaMLM, ideaCrypto, ideaAI, ideaHustle];
+      return safePick(fns, r)(r);
+    }
+  }
+}
+
+// ===== wire-up =====
+const mode = $('mode');
+const seed = $('seed');
+const idea = $('idea');
+const tag = $('tag');
+const seedtag = $('seedtag');
+const favcount = $('favcount');
+const favs = $('favs');
+const batch = $('batch');
+
+const chipCats = ['surprise','getrich','mlm','crypto','ai','hustle'];
+const chips = $('chips');
+chipCats.forEach(c=>{
+  const el=document.createElement('div'); el.className='chip'; el.dataset.c=c; el.textContent=c;
+  el.onclick=()=>{ mode.value=c; refreshChips(); };
+  chips.appendChild(el);
+});
+function refreshChips(){ [...chips.children].forEach(ch=>ch.classList.toggle('active', ch.dataset.c===mode.value)); }
+refreshChips();
+
+function generate(){
+  const m = mode.value;
+  const s = seed.value.trim();
+  const text = makeIdea(m, s || new Date().toISOString());
+  idea.textContent = text; tag.textContent = m; seedtag.textContent = s? `seed: ${s}` : '';
+}
+document.getElementById('gen').onclick = generate;
+
+document.getElementById('batch9').onclick = ()=>{
+  batch.innerHTML='';
+  const m = mode.value; const base = seed.value.trim() || (Date.now()+'');
+  for(let i=0;i<9;i++){
+    const div = document.createElement('div');
+    div.className='idea';
+    div.textContent = makeIdea(m, `${base}#${i}`);
+    batch.appendChild(div);
+  }
+  tag.textContent = m+" ×9"; seedtag.textContent = base? `seed: ${base}` : '';
+};
+
+document.getElementById('copy').onclick = async ()=>{
+  try{ await navigator.clipboard.writeText(idea.textContent); alert('Copied!'); }
+  catch(e){ alert('Copy failed — long-press to copy on mobile.'); }
+};
+document.getElementById('tweet').onclick = ()=>{
+  const text = encodeURIComponent(idea.textContent+" #BadIdeaGenerator");
+  const url = encodeURIComponent(location.href);
+  window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`,'_blank');
+};
+document.getElementById('share').onclick = async ()=>{
+  if(navigator.share){ try{ await navigator.share({title:'Bad Idea Generator', text: idea.textContent}); }catch(e){} }
+  else { alert('Sharing works on most mobile browsers.'); }
+};
+
+function loadFavs(){ try{return JSON.parse(localStorage.getItem('big_favs')||'[]');}catch(e){return [];} }
+function saveFavs(a){ try{localStorage.setItem('big_favs', JSON.stringify(a));}catch(e){} }
+function renderFavs(){
+  const a=loadFavs(); favcount.textContent = a.length; favs.innerHTML='';
+  a.slice(-12).forEach(t=>{ const b=document.createElement('span'); b.className='fav'; b.textContent=t; favs.appendChild(b); });
+}
+document.getElementById('save').onclick = ()=>{ const a=loadFavs(); a.push(idea.textContent); saveFavs(a); renderFavs(); alert('Saved locally!'); };
+renderFavs();
+
+// initial idea
+idea.textContent = makeIdea('surprise', new Date().toISOString()); tag.textContent='surprise';
+</script>
+</body>
+</html>
