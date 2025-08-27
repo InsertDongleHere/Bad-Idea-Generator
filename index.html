@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>The Bad Idea Generator — Get‑Rich‑Quick (Satire)</title>
-  <meta name="description" content="Press a button to generate cursed startup pitches, get‑rich‑quick schemes, and MLM-ish nonsense. 100% satire, for laughs only." />
+  <title>The Bad Idea Generator — Get-Rich-Quick (Satire)</title>
+  <meta name="description" content="Press a button to generate cursed startup pitches, get-rich-quick schemes, and MLM-ish nonsense. 100% satire, for laughs only." />
   <style>
     :root{--bg:#0b1220;--card:#0f172a;--ink:#e6eef6;--muted:#9aa4b2;--accent:#fbbf24;--accent2:#22d3ee;--glass:rgba(255,255,255,.05)}
     *{box-sizing:border-box}
@@ -51,7 +51,7 @@
       <div class="logo">BIG</div>
       <div>
         <h1>The Bad Idea Generator</h1>
-        <p class="lead">Cursed startup pitches & get‑rich‑quick “schemes.” 100% satire. Please don’t actually do these.</p>
+        <p class="lead">Cursed startup pitches & get-rich-quick “schemes.” 100% satire. Please don’t actually do these.</p>
       </div>
     </header>
 
@@ -59,15 +59,15 @@
       <div class="controls">
         <select id="mode">
           <option value="surprise">Surprise me</option>
-          <option value="getrich">Get‑Rich‑Quick</option>
-          <option value="mlm">MLM‑ish</option>
+          <option value="getrich">Get-Rich-Quick</option>
+          <option value="mlm">MLM-ish</option>
           <option value="crypto">Crypto/Token</option>
           <option value="ai">AI Buzzword Soup</option>
           <option value="hustle">Hustle Culture</option>
         </select>
         <input id="seed" placeholder="Optional seed (e.g. 'ferrets')" />
         <button id="gen" class="primary">Generate</button>
-        <button id="batch9" title="Generate 9" >Batch×9</button>
+        <button id="batch9" title="Generate 9">Batch×9</button>
         <button id="save" class="ghost">Save</button>
         <button id="copy" class="ghost">Copy</button>
         <button id="tweet" class="ghost">Tweet</button>
@@ -86,112 +86,46 @@
 
       <footer>
         <span>Made to host on GitHub Pages / Glitch / Replit</span>
-        <span class="small">v1.0</span>
+        <span class="small">v1.1</span>
       </footer>
     </div>
   </div>
 
 <script>
-// ===== util =====
+// ===== utils (fixed pick to avoid 'undefined') =====
 const $ = (id)=>document.getElementById(id);
-function hash(s){let h=2166136261>>>0; for(let i=0;i<s.length;i++){h=((h^s.charCodeAt(i))*16777619)>>>0;} return h;}
-function pick(arr, seed){return arr[(seed ?? Math.floor(Math.random()*1e9)) % arr.length];}
-function seeded(seed){let x = (hash(seed.toLowerCase())|0) >>> 0; return ()=>{x ^= x<<13; x ^= x>>>17; x ^= x<<5; return (x>>>0)/4294967296};}
+function hash(s){ s = String(s); let h=2166136261>>>0; for(let i=0;i<s.length;i++){h=((h^s.charCodeAt(i))*16777619)>>>0;} return h>>>0; }
+function seeded(seed){
+  let x = hash(seed.toLowerCase());
+  return ()=>{ x ^= x<<13; x ^= x>>>17; x ^= x<<5; return (x>>>0)/4294967296; };
+}
+// ✅ If r is a function (RNG), sample properly; if r is a number, coerce to a valid index
+function pick(arr, r){
+  if (!arr || !arr.length) return '';
+  if (typeof r === 'function') return arr[Math.floor(r()*arr.length)];
+  const idx = Math.abs((Number(r)|0)) % arr.length;
+  return arr[idx];
+}
 
-// ===== word banks ===== (kept absurd and non-actionable; satire!)
-const ADJ = ["passive","frictionless","unhinged","AI‑powered","blockchain‑adjacent","disruptive","non‑fungible","tooth‑whitening","ergonomic","marine‑grade","influencer‑proof","unscammable","gluten‑aware","hustle‑centric","crypto‑curious","ferret‑friendly","gamma‑optimized","Sigma‑grindset","garage‑ready","side‑quest"];
+// ===== word banks (satire-only) =====
+const ADJ = ["passive","frictionless","unhinged","AI-powered","blockchain-adjacent","disruptive","non-fungible","tooth-whitening","ergonomic","marine-grade","influencer-proof","unscammable","gluten-aware","hustle-centric","crypto-curious","ferret-friendly","gamma-optimized","Sigma-grindset","garage-ready","side-quest"];
 const NOUN = ["newsletter","course","webinar","eBook","Discord","app","coin","token","PDF bundle","coaching circle","dropship empire","loyalty program","vending machine","scented candle","planner","subscription box","spreadsheet temple","chrome extension","loot box","sticker pack"];
-const AUDIENCE = ["cat owners","new dads","crypto widows","CrossFit accountants","left‑handed baristas","people who say 'literally'","van‑lifers","pickleball champs","moms named Ashley","PC builders","Fridays‑only gym bros","retired magicians","sous‑vide enthusiasts","people with 7 tabs open","car guys who bake","introverted extroverts"];
-const MECH = ["pay a tiny monthly fee","stake vibes for yield","refer 3 friends who refer 3 friends","mint loyalty points on a spreadsheet","watch ads while you sleep","convert exposure into rent","sell the method for selling the method","charge a convenience fee on free items","pre‑sell the sequel first","bundle 7 free things and charge $19","rent your personality by the hour","turn chores into micro‑tasks","repackage Wikipedia with emojis"];
-const PROMISE = ["six figures by Friday","passive income while you blink","cashflow before learning anything","ROI so high calculators cry","lifestyle so passive it naps","freedom from clocks and socks","profits in dog years","money printer that says 'pls'","overnight success, allow 2‑3 years"];
-const CRYPTO = ["airdrop seasonality","layer‑2 vibes","deflationary dust","yield‑bearing memes","token‑gated coupons","gasless IOUs","proof‑of‑vibes consensus","staking for clout","airdropped apologies"];
-const AI = ["fine‑tuned vibes","auto‑prompted funnels","agentic hustle swarms","synthetic interns","generative door‑to‑door","AI that hires other AI","LLM that only says 'bro'","sentiment‑driven cold DMs","prompt‑engineered charisma"];
+const AUDIENCE = ["cat owners","new dads","crypto widows","CrossFit accountants","left-handed baristas","people who say 'literally'","van-lifers","pickleball champs","moms named Ashley","PC builders","Fridays-only gym bros","retired magicians","sous-vide enthusiasts","people with 7 tabs open","car guys who bake","introverted extroverts"];
+const MECH = ["pay a tiny monthly fee","stake vibes for yield","refer 3 friends who refer 3 friends","mint loyalty points on a spreadsheet","watch ads while you sleep","convert exposure into rent","sell the method for selling the method","charge a convenience fee on free items","pre-sell the sequel first","bundle 7 free things and charge $19","rent your personality by the hour","turn chores into micro-tasks","repackage Wikipedia with emojis"];
+const PROMISE = ["six figures by Friday","passive income while you blink","cashflow before learning anything","ROI so high calculators cry","lifestyle so passive it naps","freedom from clocks and socks","profits in dog years","money printer that says 'pls'","overnight success, allow 2-3 years"];
+const CRYPTO = ["airdrop seasonality","layer-2 vibes","deflationary dust","yield-bearing memes","token-gated coupons","gasless IOUs","proof-of-vibes consensus","staking for clout","airdropped apologies"];
+const AI = ["fine-tuned vibes","auto-prompted funnels","agentic hustle swarms","synthetic interns","generative door-to-door","AI that hires other AI","LLM that only says 'bro'","sentiment-driven cold DMs","prompt-engineered charisma"];
 const MLM = ["infinite depth but tastefully","circle that is legally a polygon","upline brunch culture","rank names like 'Obsidian Wolf'","monthly box of vibes","car bonus that's a bus pass","webinars about webinars","team chants in Slack","leadership crystals included"];
 
+// ===== idea factories =====
 function ideaGetRich(r){
-  return `Launch a ${pick(ADJ,r())} ${pick(NOUN,r())} for ${pick(AUDIENCE,r())}; users ${pick(MECH,r())}. Promise ${pick(PROMISE,r())}.`;
+  return `Launch a ${pick(ADJ,r)} ${pick(NOUN,r)} for ${pick(AUDIENCE,r)}; users ${pick(MECH,r)}. Promise ${pick(PROMISE,r)}.`;
 }
 function ideaMLM(r){
-  return `Tasteful not‑a‑pyramid where members sell a ${pick(ADJ,r())} ${pick(NOUN,r())} to ${pick(AUDIENCE,r())}; ${pick(MLM,r())}.`;
+  return `Tasteful not-a-pyramid where members sell a ${pick(ADJ,r)} ${pick(NOUN,r)} to ${pick(AUDIENCE,r)}; ${pick(MLM,r)}.`;
 }
 function ideaCrypto(r){
-  return `Tokenize ${pick(AUDIENCE,r())} with ${pick(ADJ,r())} ${pick(NOUN,r())}; ${pick(CRYPTO,r())}; chart only goes up (artist's impression).`;
+  return `Tokenize ${pick(AUDIENCE,r)} with ${pick(ADJ,r)} ${pick(NOUN,r)}; ${pick(CRYPTO,r)}; chart only goes up (artist's impression).`;
 }
 function ideaAI(r){
-  return `Ship an ${pick(ADJ,r())} AI that does ${pick(AI,r())} for ${pick(AUDIENCE,r())}. Monetize when it invoices itself.`;
-}
-function ideaHustle(r){
-  return `Wake at 4:04am to resell ${pick(NOUN,r())} to ${pick(AUDIENCE,r())}; ${pick(MECH,r())}. Read a thread about it and become a mentor.`;
-}
-
-function makeIdea(mode, seed){
-  const r = seeded(seed || (Math.random()+""));
-  switch(mode){
-    case 'getrich': return ideaGetRich(r);
-    case 'mlm': return ideaMLM(r);
-    case 'crypto': return ideaCrypto(r);
-    case 'ai': return ideaAI(r);
-    case 'hustle': return ideaHustle(r);
-    default: return [ideaGetRich, ideaMLM, ideaCrypto, ideaAI, ideaHustle][Math.floor(r()*5)](r);
-  }
-}
-
-// ===== DOM =====
-const mode = $('mode');
-const seed = $('seed');
-const idea = $('idea');
-const tag = $('tag');
-const seedtag = $('seedtag');
-const favcount = $('favcount');
-const favs = $('favs');
-const batch = $('batch');
-
-const chipCats = ['surprise','getrich','mlm','crypto','ai','hustle'];
-const chips = $('chips');
-chipCats.forEach(c=>{const el=document.createElement('div'); el.className='chip'; el.dataset.c=c; el.textContent=c; el.onclick=()=>{mode.value=c; refreshChips();}; chips.appendChild(el);});
-function refreshChips(){[...chips.children].forEach(ch=>ch.classList.toggle('active', ch.dataset.c===mode.value));}
-refreshChips();
-
-function generate(){
-  const m = mode.value; const s = seed.value.trim();
-  const text = makeIdea(m, s || new Date().toISOString());
-  idea.textContent = text; tag.textContent = m; seedtag.textContent = s? `seed: ${s}` : '';
-}
-
-$('gen').onclick = generate;
-
-$('batch9').onclick = ()=>{
-  batch.innerHTML='';
-  const m = mode.value; const base = seed.value.trim()||Date.now()+'';
-  for(let i=0;i<9;i++){
-    const div = document.createElement('div');
-    div.className='idea';
-    div.textContent = makeIdea(m, base+'#'+i);
-    batch.appendChild(div);
-  }
-  tag.textContent = m+" ×9"; seedtag.textContent = base? `seed: ${base}` : '';
-};
-
-$('copy').onclick = async ()=>{
-  try{await navigator.clipboard.writeText(idea.textContent); alert('Copied!');}catch(e){alert('Copy failed — long‑press to copy on mobile.');}
-};
-$('tweet').onclick = ()=>{
-  const text = encodeURIComponent(idea.textContent+" #BadIdeaGenerator");
-  const url = encodeURIComponent(location.href);
-  window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`,'_blank');
-};
-$('share').onclick = async ()=>{
-  if(navigator.share){try{await navigator.share({title:'Bad Idea Generator', text: idea.textContent});}catch(e){}} else {alert('Sharing works on most mobile browsers.');}
-};
-
-function loadFavs(){return JSON.parse(localStorage.getItem('big_favs')||'[]');}
-function saveFavs(a){localStorage.setItem('big_favs', JSON.stringify(a));}
-function renderFavs(){const a=loadFavs(); favcount.textContent = a.length; favs.innerHTML=''; a.slice(-12).forEach(t=>{const b=document.createElement('span'); b.className='fav'; b.textContent=t; favs.appendChild(b);});}
-$('save').onclick = ()=>{const a=loadFavs(); a.push(idea.textContent); saveFavs(a); renderFavs(); alert('Saved locally!');};
-renderFavs();
-
-// initial idea
-idea.textContent = makeIdea('surprise', new Date().toISOString()); tag.textContent='surprise';
-</script>
-</body>
-</html>
+  return `Ship an ${pick(ADJ,r)} AI that does $
